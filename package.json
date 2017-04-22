@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Amazon-like storefront app that takes in orders from customers and depletes stock from the store's inventory.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eleanormark/bamazon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eleanormark/bamazon/issues"
+  },
+  "homepage": "https://github.com/eleanormark/bamazon#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "mysql": "^2.13.0"
+  }
+}
