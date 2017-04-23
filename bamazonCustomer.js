@@ -88,7 +88,7 @@ function checkAndUpdateInventory (id, quantity, callback) {
 
                 console.log("subtotal: " + currentItem[0].product_name + " " + currentItem[0].price +
                         " x " + quantity + " = $" + subtotal);
-                console.log("total: " + total);
+                console.log("current total: $" + total);
 
                 callback();
             } );
