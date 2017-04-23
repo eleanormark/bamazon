@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     password: "",
     database: "bamazonDB"
 });
-
+var total = 0;
 //new cli-table
 var customerViewTable = new Table({
     head: ['ID', 'Product', 'Category', 'Price']
@@ -70,11 +70,11 @@ function promptConsumer (){
         }
 
     ]).then(function (answers) {
-        checkAndUpdateInventory(answers.item_id, answers.quantity);
+        checkAndUpdateInventory(answers.item_id, answers.quantity,promptConsumer);
     });
 }
 
-function checkAndUpdateInventory (id, quantity) {
+function checkAndUpdateInventory (id, quantity, callback) {
     connection.query('SELECT * FROM Products WHERE item_id = ?', [id], function(err, res){
         var stockQuantity = res[0].stock_quantity;
         if (err) throw err;
@@ -82,14 +82,24 @@ function checkAndUpdateInventory (id, quantity) {
         if (quantity <= stockQuantity) {
 
             connection.query('UPDATE PRODUCTS SET stock_quantity = stock_quantity - ? WHERE item_id = ?', [ quantity, id], function (err, res) {
+                var subtotal = currentItem[0].price * quantity;
+                total = total + subtotal;
                 if (err) throw err;
-                    console.log("subtotal: " + currentItem[0].product_name + " " + currentItem[0].price +
-                        " x " + quantity + " = $" + currentItem[0].price * quantity);
+
+                console.log("subtotal: " + currentItem[0].product_name + " " + currentItem[0].price +
+                        " x " + quantity + " = $" + subtotal);
+                console.log("total: " + total);
+
+                callback();
             } );
 
         } else {
             console.log("Sorry, we have: " + stockQuantity + "in stock.");
+            callback();
         }
+
     });
+
+
 
 }
