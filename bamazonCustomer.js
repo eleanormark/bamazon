@@ -4,7 +4,6 @@ var mysql = require('mysql');
 var inquirer = require('inquirer');
 var Table = require('cli-table');
 
-var shoppingCart = [];
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -84,8 +83,10 @@ function checkAndUpdateInventory (id, quantity) {
 
             connection.query('UPDATE PRODUCTS SET stock_quantity = stock_quantity - ? WHERE item_id = ?', [ quantity, id], function (err, res) {
                 if (err) throw err;
-                console.log("subtotal: " + currentItem[0].product_name + " " + currentItem[0].price + " x " + quantity + " = $" + currentItem[0].price * quantity);
+                    console.log("subtotal: " + currentItem[0].product_name + " " + currentItem[0].price +
+                        " x " + quantity + " = $" + currentItem[0].price * quantity);
             } );
+
         } else {
             console.log("Sorry, we have: " + stockQuantity + "in stock.");
         }
